@@ -1,19 +1,19 @@
 const express  = require("express")
 require("dotenv").config()
 const cors = require("cors")
-const {connection}   = require("../Backend/configs/db")
-const {userRoutes} = require("../Backend/routes/User.route")
-const {productRoutes} = require("../Backend/routes/Product.route")
+const {connection}   = require("./configs/db")
+const {userRoutes} = require("./routes/User.route")
+const {productRoutes} = require("./routes/Product.route")
 
 const app  = express()
-app.use(cors({
-    origin:"*"
-}))
+app.use(cors())
 
 app.use(express.json())
+
 app.get("/",(req,res) => {
     res.send("Hello Boy")
 })
+
 app.use("/user",userRoutes)
 app.use("/product",productRoutes)
 
