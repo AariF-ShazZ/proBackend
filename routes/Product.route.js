@@ -3,9 +3,15 @@ const { ProductModel } = require("../models/Product.model")
 const productRoutes = express.Router()
 
 productRoutes.get("/", async (req, res) => {
+    let page = Number(req.query.page) || 1
+    let limit = Number(req.query.limit) || 10
+    console.log("page",page);
+    console.log("limit",limit);
+    let skip = (page - 1) * limit
     try {
-        let productsItem = await ProductModel.find()
-        res.send(productsItem)
+ 
+        let productsItem = await ProductModel.find().skip(skip).limit(limit)
+        res.send({page: page,limit:limit,products:productsItem})
         // console.log(productsItem);
     } catch (err) {
         res.send("Products Can't get from the Database")
